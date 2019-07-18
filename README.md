@@ -7,7 +7,7 @@ a upload component that upload file to aliyun, support crop before upload and ca
 ## Install
 
 ```bash
-yarn add @36node/upload
+yarn add @36node/upload antd ali-oss
 ```
 
 ## Usage
