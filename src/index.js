@@ -73,8 +73,6 @@ export default class UploadComponent extends React.Component {
       `${file.name.split(".")[0]}-${file.uid}.${file.type.split("/")[1]}`;
     if (key) {
       key = typeof key === "function" ? key() : key;
-      console.log("key", key);
-      console.log("file", file);
       return await this.client.multipartUpload(key, file, {
         progress: p => {
           onProgress({ percent: p * 100 });
