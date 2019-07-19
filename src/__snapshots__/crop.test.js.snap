@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should renders correctly 1`] = `
+<div
+  className="ReactCrop"
+  onKeyDown={[Function]}
+  onMouseDown={[Function]}
+  onTouchStart={[Function]}
+  role="presentation"
+  tabIndex={1}
+>
+  <div>
+    <img
+      alt=""
+      className="ReactCrop__image"
+      onError={[Function]}
+      onLoad={[Function]}
+      src=""
+    />
+  </div>
+</div>
+`;
