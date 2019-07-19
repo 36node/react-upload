@@ -79,6 +79,7 @@ check full examples [here](./example/src/app.js)
 @36node/upload is base on antd upload, it supports all antd upload api, check it [here](https://ant.design/components/upload/)
 
 some extra options are list below
+
 | Property | Description | Type | Default |
 |------------|--------------|-------------|--------------|
 | ossOptions | [ali-oss](https://github.com/ali-sdk/ali-oss) options, required | object | - |
