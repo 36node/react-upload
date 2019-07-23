@@ -36,7 +36,7 @@ export default class UploadComponent extends React.Component {
     list
       .filter(file => file.status === "done")
       .forEach(file => {
-        file.url = file.url || file.response.res.requestUrls[0];
+        file.url = file.url || file.response.res.requestUrls[0].split("?")[0];
       });
 
     this.setState({ fileList: list });

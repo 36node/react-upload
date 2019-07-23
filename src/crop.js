@@ -19,6 +19,7 @@ export default class Crop extends React.Component {
     croppedFile = null;
     return new Promise((resolve, reject) => {
       Modal.confirm({
+        width: "max-content",
         icon: " ",
         content: <Crop file={file} options={options} />,
         onOk: () => {
