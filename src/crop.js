@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal } from "antd";
 import ReactCrop from "react-image-crop";
-import "react-image-crop/dist/ReactCrop.css";
+import "./ReactCrop.css";
 
 let croppedFile;
 export default class Crop extends React.Component {
