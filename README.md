@@ -71,6 +71,20 @@ const cropOptions = {
 </Upload>
 ```
 
+### Compress Image
+
+check all compress options [here](https://github.com/Donaldcwl/browser-image-compression)
+
+```js
+const compressOptions = {
+  maxSizeMB: 0.5,
+};
+
+<Upload ossOptions={ossOptions} compressOptions={compressOptions}>
+  <Button>upload</Button>
+</Upload>
+```
+
 check full examples [here](./example/src/app.js)
 
 
@@ -83,10 +97,11 @@ some extra options are list below
 | Property | Description | Type | Default |
 |------------|--------------|-------------|--------------|
 | ossOptions | [ali-oss](https://github.com/ali-sdk/ali-oss) options, required | object | - |
-| cropOptions |	crop option from [react-image-crop](https://github.com/DominicTobias/react-image-crop#readme) | object | - |
+| cropOptions |	crop options from [react-image-crop](https://github.com/DominicTobias/react-image-crop) | object | - |
+| compressOptions | compress options from [browser-image-compression](https://github.com/Donaldcwl/browser-image-compression) options | object | - |
 | max | the max size of file list | number | - |
 | value | initial file list | array | - |
-| onChange | A callback function, can be executed when uploading state is changing | Function | - |
+| onChange | A callback function, can be executed when uploading state is changing | function | - |
 
 
 
