@@ -48,6 +48,7 @@
   },
   "dependencies": {
     "browser-image-compression": "^1.0.6",
+    "jsdom-worker-fix": "^0.1.8",
     "lodash": "^4.17.11",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
@@ -78,5 +79,10 @@
   "peerDependencies": {
     "ali-oss": "^6.1.1",
     "antd": "^3.20.3"
+  },
+  "jest": {
+    "setupFiles": [
+      "jsdom-worker-fix"
+    ]
   }
 }
