@@ -2,6 +2,7 @@ import React from "react";
 import { Upload } from "antd";
 import isEqual from "lodash/isEqual";
 import OSS from "ali-oss";
+import imageCompression from "browser-image-compression";
 
 import Crop from "./crop";
 
@@ -44,10 +45,17 @@ export default class UploadComponent extends React.Component {
   };
 
   beforeUpload = async file => {
-    const { cropOptions } = this.props;
+    const { cropOptions, compressOptions } = this.props;
     let blob = file;
     if (cropOptions) {
       blob = await Crop.crop(file, cropOptions);
+      blob.uid = file.uid;
+      blob.lastModifiedDate = file.lastModifiedDate;
+      blob.lastModified = file.lastModified;
+    }
+
+    if (compressOptions) {
+      blob = await imageCompression(blob, compressOptions);
       blob.uid = file.uid;
       blob.lastModifiedDate = file.lastModifiedDate;
       blob.lastModified = file.lastModified;

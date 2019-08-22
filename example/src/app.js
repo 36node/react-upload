@@ -29,6 +29,12 @@ class App extends Component {
     };
   }
 
+  get compressOptions() {
+    return {
+      maxSizeMB: 0.5,
+    };
+  }
+
   onSubmit = () => {
     const upload = this.props.form.getFieldValue("upload");
     console.log(upload);
@@ -69,6 +75,14 @@ class App extends Component {
 
         <Divider orientation="left">Crop Before Upload</Divider>
         <Upload ossOptions={this.ossOptions} cropOptions={this.cropOptions}>
+          <Button>upload</Button>
+        </Upload>
+
+        <Divider orientation="left">Limit Image Size (0.5MB)</Divider>
+        <Upload
+          ossOptions={this.ossOptions}
+          compressOptions={this.compressOptions}
+        >
           <Button>upload</Button>
         </Upload>
 
