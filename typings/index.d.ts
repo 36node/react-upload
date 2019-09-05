@@ -1,20 +1,24 @@
 import * as React from "react";
 
-import { UploadProps, UploadFile } from "antd/lib/upload/interface"
+import { UploadProps, UploadFile } from "antd/lib/upload/interface";
 
-export declare type UploadType = 'drag' | 'select';
-export declare type UploadListType = 'text' | 'picture' | 'picture-card';
+export declare type UploadType = "drag" | "select";
+export declare type UploadListType = "text" | "picture" | "picture-card";
 
 declare class UploadComponent extends React.Component<
-UploadProps,
-ExtraProps
-  > { }
+  UploadProps,
+  ExtraProps
+> {}
 
 export interface ExtraProps {
   cropOptions?: cropOptions;
   ossOptions: OSSOptions;
-  max?: Number;
+  maxFileNumber?: Number;
+  maxFileSize?: Number;
   onChange?: Function;
+  accept?: String;
+  listType?: String;
+  preview?: Boolean;
   value?: Array<UploadFile>;
 }
 

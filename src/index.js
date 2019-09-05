@@ -1,13 +1,44 @@
 import React from "react";
-import { Upload } from "antd";
+import { Upload, message, Modal } from "antd";
 import isEqual from "lodash/isEqual";
 import OSS from "ali-oss";
+import PropTypes from "prop-types";
 
 import Crop from "./crop";
 
+function getBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
+}
+function disableOrHidePropsChildren(children, listType) {
+  if (listType === "picture-card") {
+    return null;
+  }
+  if (children && children.length) {
+    return children.map(child =>
+      React.cloneElement(child, {
+        disabled: true,
+      })
+    );
+  } else {
+    return React.cloneElement(children, {
+      disabled: true,
+    });
+  }
+}
 export default class UploadComponent extends React.Component {
+  static defaultProps = {
+    preview: true,
+  };
+
   state = {
     fileList: this.props.value || [],
+    previewVisible: false,
+    previewImage: "",
   };
 
   componentWillMount() {
@@ -44,7 +75,7 @@ export default class UploadComponent extends React.Component {
   };
 
   beforeUpload = async file => {
-    const { cropOptions } = this.props;
+    const { cropOptions, maxFileSize } = this.props;
     let blob = file;
     if (cropOptions) {
       blob = await Crop.crop(file, cropOptions);
@@ -52,8 +83,18 @@ export default class UploadComponent extends React.Component {
       blob.lastModifiedDate = file.lastModifiedDate;
       blob.lastModified = file.lastModified;
     }
-
-    return blob;
+    // IF RETURN FALSE DIRECTLY INSTEAD OF A PROMISE HERE, THE PICTURE WILL BE STILL IN UPLOADING STATE
+    // PLEASE REFERENCE ANTD ISSUE: https://github.com/ant-design/ant-design/issues/8020
+    return new Promise((resolve, reject) => {
+      // TODO: maybe use human-readable string instead of number of kbs
+      if (maxFileSize && blob.size > maxFileSize * 1024) {
+        const errMsg = `文件大小不能超过${maxFileSize}KB!`;
+        message.error(errMsg);
+        reject(errMsg);
+      } else {
+        resolve(blob);
+      }
+    });
   };
 
   customRequest = async ({ file, onSuccess, onProgress, onError }) => {
@@ -81,19 +122,50 @@ export default class UploadComponent extends React.Component {
     }
   };
 
-  render() {
-    const { fileList } = this.state;
+  handleCancel = () => this.setState({ previewVisible: false });
 
+  handlePreview = async file => {
+    if (!file.url && !file.preview) {
+      file.preview = await getBase64(file.originFileObj);
+    }
+
+    this.setState({
+      previewImage: file.url || file.preview,
+      previewVisible: true,
+    });
+  };
+
+  render() {
+    const { fileList, previewVisible, previewImage } = this.state;
+    const listType = this.props.preview ? this.props.listType : "text";
     return (
-      <Upload
-        {...this.props}
-        onChange={this.onChange}
-        fileList={fileList}
-        beforeUpload={this.beforeUpload}
-        customRequest={this.customRequest}
-      >
-        {this.props.children}
-      </Upload>
+      <div>
+        <Upload
+          listType={listType}
+          accept={this.props.accept}
+          onChange={this.onChange}
+          fileList={fileList}
+          onPreview={this.handlePreview}
+          beforeUpload={this.beforeUpload}
+          customRequest={this.customRequest}
+        >
+          {this.props.maxFileNumber &&
+          fileList.length >= this.props.maxFileNumber
+            ? disableOrHidePropsChildren(this.props.children, listType)
+            : this.props.children}
+        </Upload>
+        <Modal
+          visible={previewVisible}
+          footer={null}
+          onCancel={this.handleCancel}
+        >
+          <img alt="example" style={{ width: "100%" }} src={previewImage} />
+        </Modal>
+      </div>
     );
   }
 }
+
+UploadComponent.propTypes = {
+  preview: PropTypes.bool,
+};

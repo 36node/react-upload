@@ -1,12 +1,26 @@
 import React from "react";
 import { storiesOf } from "@storybook/react";
-import { Button } from "antd";
+import { Icon } from "antd";
 
 import Upload from "../src";
 
+const cropOptions = {
+  crop: {
+    unit: "%",
+    width: 100,
+    aspect: 1,
+  },
+};
 // default demo
 storiesOf("Welcome", module).add("to Storybook", () => (
-  <Upload>
-    <Button>upload</Button>
+  <Upload
+    cropOptions={cropOptions}
+    listType="picture-card"
+    maxFileNumber={1}
+    maxFileSize={700}
+    accept=".jpg, .png"
+  >
+    <Icon type="plus" />
+    <div className="ant-upload-text">Upload</div>
   </Upload>
 ));
