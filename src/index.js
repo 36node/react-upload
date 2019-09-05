@@ -14,7 +14,10 @@ function getBase64(file) {
     reader.onerror = error => reject(error);
   });
 }
-function disablePropsChildren(children) {
+function disableOrHidePropsChildren(children, listType) {
+  if (listType === "picture-card") {
+    return null;
+  }
   if (children && children.length) {
     return children.map(child =>
       React.cloneElement(child, {
@@ -134,10 +137,11 @@ export default class UploadComponent extends React.Component {
 
   render() {
     const { fileList, previewVisible, previewImage } = this.state;
+    const listType = this.props.preview ? this.props.listType : "text";
     return (
       <div>
         <Upload
-          listType={this.props.preview ? this.props.listType : "text"}
+          listType={listType}
           accept={this.props.accept}
           onChange={this.onChange}
           fileList={fileList}
@@ -147,7 +151,7 @@ export default class UploadComponent extends React.Component {
         >
           {this.props.maxFileNumber &&
           fileList.length >= this.props.maxFileNumber
-            ? disablePropsChildren(this.props.children)
+            ? disableOrHidePropsChildren(this.props.children, listType)
             : this.props.children}
         </Upload>
         <Modal
