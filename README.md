@@ -84,9 +84,12 @@ some extra options are list below
 |------------|--------------|-------------|--------------|
 | ossOptions | [ali-oss](https://github.com/ali-sdk/ali-oss) options, required | object | - |
 | cropOptions |	crop option from [react-image-crop](https://github.com/DominicTobias/react-image-crop#readme) | object | - |
-| max | the max size of file list | number | - |
+| maxFileSize | the max size of file list | number | - |
+| maxFileNumber | the max number of file list | number | - |
 | value | initial file list | array | - |
 | onChange | A callback function, can be executed when uploading state is changing | Function | - |
+| listType | Built-in stylesheets, support for three types: text, picture or picture-card | String | 'text' |
+| accept | File types that can be accepted. See input accept [Attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#accept) | String | - |
 
 
 

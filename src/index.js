@@ -129,11 +129,9 @@ export default class UploadComponent extends React.Component {
           customRequest={this.customRequest}
         >
           {this.props.maxFileNumber &&
-          fileList.length >= this.props.maxFileNumber ? (
-            <span />
-          ) : (
-            this.props.children
-          )}
+          fileList.length >= this.props.maxFileNumber
+            ? null
+            : this.props.children}
         </Upload>
         <Modal
           visible={previewVisible}
