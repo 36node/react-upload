@@ -14,7 +14,19 @@ function getBase64(file) {
     reader.onerror = error => reject(error);
   });
 }
-
+function disablePropsChildren(children) {
+  if (children && children.length) {
+    return children.map(child =>
+      React.cloneElement(child, {
+        disabled: true,
+      })
+    );
+  } else {
+    return React.cloneElement(children, {
+      disabled: true,
+    });
+  }
+}
 export default class UploadComponent extends React.Component {
   static defaultProps = {
     preview: true,
@@ -135,7 +147,7 @@ export default class UploadComponent extends React.Component {
         >
           {this.props.maxFileNumber &&
           fileList.length >= this.props.maxFileNumber
-            ? null
+            ? disablePropsChildren(this.props.children)
             : this.props.children}
         </Upload>
         <Modal
