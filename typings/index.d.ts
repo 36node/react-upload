@@ -16,6 +16,9 @@ export interface ExtraProps {
   maxFileNumber?: Number;
   maxFileSize?: Number;
   onChange?: Function;
+  accept?: String;
+  listType?: String;
+  preview?: Boolean;
   value?: Array<UploadFile>;
 }
 

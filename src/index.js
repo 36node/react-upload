@@ -120,7 +120,7 @@ export default class UploadComponent extends React.Component {
     return (
       <div>
         <Upload
-          listType={this.props.listType}
+          listType={this.props.preview ? this.props.listType : "text"}
           accept={this.props.accept}
           onChange={this.onChange}
           fileList={fileList}
