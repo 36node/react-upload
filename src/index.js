@@ -2,6 +2,7 @@ import React from "react";
 import { Upload, message, Modal } from "antd";
 import isEqual from "lodash/isEqual";
 import OSS from "ali-oss";
+import PropTypes from "prop-types";
 
 import Crop from "./crop";
 
@@ -15,6 +16,10 @@ function getBase64(file) {
 }
 
 export default class UploadComponent extends React.Component {
+  static defaultProps = {
+    preview: true,
+  };
+
   state = {
     fileList: this.props.value || [],
     previewVisible: false,
@@ -144,3 +149,7 @@ export default class UploadComponent extends React.Component {
     );
   }
 }
+
+UploadComponent.propTypes = {
+  preview: PropTypes.bool,
+};
