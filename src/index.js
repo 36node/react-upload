@@ -85,7 +85,7 @@ export default class UploadComponent extends React.Component {
     return new Promise((resolve, reject) => {
       // TODO: maybe use human-readable string instead of number of kbs
       if (maxFileSize && blob.size > maxFileSize * 1024) {
-        const errMsg = `File must smaller than ${maxFileSize}KB!`;
+        const errMsg = `文件大小不能超过${maxFileSize}KB!`;
         message.error(errMsg);
         reject(errMsg);
       } else {
