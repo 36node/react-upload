@@ -13,7 +13,7 @@ const PREVIEW_CONTENT = {
       Your browser does not support HTML5 video.
     </video>
   ),
-  img: src => <img alt="example" style={{ width: "100%" }} src={src} />,
+  image: src => <img alt="example" style={{ width: "100%" }} src={src} />,
   file: src => (
     <div>
       <Icon type="file" />
@@ -49,13 +49,13 @@ function disableOrHidePropsChildren(children, listType) {
 export default class UploadComponent extends React.Component {
   static defaultProps = {
     preview: true,
-    previewType: "img",
   };
 
   state = {
     fileList: this.props.value || [],
     previewVisible: false,
     previewFile: "",
+    previewFileType: "file",
   };
 
   componentWillMount() {
@@ -142,17 +142,30 @@ export default class UploadComponent extends React.Component {
   handleCancel = () => this.setState({ previewVisible: false });
 
   handlePreview = async file => {
+    let fileType = "file";
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj);
     }
+    if (file.type && file.type.includes("video")) {
+      fileType = "video";
+    }
+    if (file.type && file.type.includes("image")) {
+      fileType = "image";
+    }
     this.setState({
+      previewFileType: fileType,
       previewFile: file.url || file.preview,
       previewVisible: true,
     });
   };
 
   render() {
-    const { fileList, previewVisible, previewFile } = this.state;
+    const {
+      fileList,
+      previewVisible,
+      previewFile,
+      previewFileType,
+    } = this.state;
     const listType = this.props.preview ? this.props.listType : "text";
     return (
       <div>
@@ -175,7 +188,7 @@ export default class UploadComponent extends React.Component {
           footer={null}
           onCancel={this.handleCancel}
         >
-          {PREVIEW_CONTENT[this.props.previewType](previewFile)}
+          {PREVIEW_CONTENT[previewFileType](previewFile)}
         </Modal>
       </div>
     );
