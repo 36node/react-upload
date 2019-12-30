@@ -1,10 +1,26 @@
 import React from "react";
-import { Upload, message, Modal } from "antd";
+import { Upload, message, Modal, Icon } from "antd";
 import isEqual from "lodash/isEqual";
 import OSS from "ali-oss";
 import PropTypes from "prop-types";
 
 import Crop from "./crop";
+
+const PREVIEW_CONTENT = {
+  video: src => (
+    <video width="400" controls>
+      <source src={src} />
+      Your browser does not support HTML5 video.
+    </video>
+  ),
+  img: src => <img alt="example" style={{ width: "100%" }} src={src} />,
+  file: src => (
+    <div>
+      <Icon type="file" />
+      <a href={src}>{src}</a>
+    </div>
+  ),
+};
 
 function getBase64(file) {
   return new Promise((resolve, reject) => {
@@ -33,12 +49,13 @@ function disableOrHidePropsChildren(children, listType) {
 export default class UploadComponent extends React.Component {
   static defaultProps = {
     preview: true,
+    previewType: "img",
   };
 
   state = {
     fileList: this.props.value || [],
     previewVisible: false,
-    previewImage: "",
+    previewFile: "",
   };
 
   componentWillMount() {
@@ -128,15 +145,14 @@ export default class UploadComponent extends React.Component {
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj);
     }
-
     this.setState({
-      previewImage: file.url || file.preview,
+      previewFile: file.url || file.preview,
       previewVisible: true,
     });
   };
 
   render() {
-    const { fileList, previewVisible, previewImage } = this.state;
+    const { fileList, previewVisible, previewFile } = this.state;
     const listType = this.props.preview ? this.props.listType : "text";
     return (
       <div>
@@ -159,7 +175,7 @@ export default class UploadComponent extends React.Component {
           footer={null}
           onCancel={this.handleCancel}
         >
-          <img alt="example" style={{ width: "100%" }} src={previewImage} />
+          {PREVIEW_CONTENT[this.props.previewType](previewFile)}
         </Modal>
       </div>
     );
@@ -168,4 +184,5 @@ export default class UploadComponent extends React.Component {
 
 UploadComponent.propTypes = {
   preview: PropTypes.bool,
+  previewType: PropTypes.string,
 };
