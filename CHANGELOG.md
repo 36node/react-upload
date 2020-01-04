@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0](https://github.com/36node/sketch/compare/v0.2.0...v0.3.0) (2020-01-04)
+
+
+### Features
+
+* support multiple file types preview automatically ([7be52a8](https://github.com/36node/sketch/commit/7be52a8))
+* support preview filetypes in addition to image ([8308aa7](https://github.com/36node/sketch/commit/8308aa7))
+
+
+
 ## [0.2.0](https://github.com/36node/sketch/compare/v0.1.2...v0.2.0) (2019-09-05)
 
 
