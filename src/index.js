@@ -146,10 +146,20 @@ export default class UploadComponent extends React.Component {
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj);
     }
-    if (file.type && file.type.includes("video")) {
+    if (
+      (file.type && file.type.includes("video")) ||
+      file.url.indexOf(".mp4") !== -1 ||
+      file.url.indexOf(".mp3") !== -1 ||
+      file.url.indexOf(".avi") !== -1
+    ) {
       fileType = "video";
     }
-    if (file.type && file.type.includes("image")) {
+    if (
+      (file.type && file.type.includes("image")) ||
+      file.url.indexOf(".jpg") !== -1 ||
+      file.url.indexOf(".jpeg") !== -1 ||
+      file.url.indexOf(".png") !== -1
+    ) {
       fileType = "image";
     }
     this.setState({
