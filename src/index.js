@@ -147,7 +147,7 @@ export default class UploadComponent extends React.Component {
     if (key) {
       key = typeof key === "function" ? key() : key;
       return await this.client.multipartUpload(key, file, {
-        mime: this.setContentType(file.type.split("/")[1]),
+        mime: this.setContentType(key),
         progress: p => {
           onProgress({ percent: p * 100 });
         },
