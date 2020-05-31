@@ -123,6 +123,21 @@ export default class UploadComponent extends React.Component {
     }
   };
 
+  setContentType = type => {
+    if (type.indexOf(".bmp") !== -1) {
+      return "image/bmp";
+    } else if (type.indexOf(".gif") !== -1) {
+      return "image/gif";
+    } else if (
+      type.indexOf(".jpeg") !== -1 ||
+      type.indexOf(".jpg") !== -1 ||
+      type.indexOf(".png") !== -1
+    ) {
+      return "image/jpg";
+    }
+    return undefined;
+  };
+
   uploadToOSS = async (file, onProgress) => {
     const { ossOptions = {} } = this.props;
     let { key } = ossOptions;
@@ -132,6 +147,7 @@ export default class UploadComponent extends React.Component {
     if (key) {
       key = typeof key === "function" ? key() : key;
       return await this.client.multipartUpload(key, file, {
+        mime: this.setContentType(file.type.split("/")[1]),
         progress: p => {
           onProgress({ percent: p * 100 });
         },
