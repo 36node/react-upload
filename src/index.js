@@ -143,7 +143,7 @@ export default class UploadComponent extends React.Component {
     let { key } = ossOptions;
     key =
       key ||
-      `${file.name.split(".")[0]}-${file.uid}.${file.type.split("/")[1]}`;
+      `${file.name.split(".")[0]}-${file.uid}.${file.name.split(".")[1]}`;
     if (key) {
       key = typeof key === "function" ? key() : key;
       return await this.client.multipartUpload(key, file, {
