@@ -43,7 +43,6 @@
     "braft-editor": "^2.3.7",
     "braft-utils": "^3.0.12",
     "lodash": "^4.17.11",
-    "moment": "^2.29.1",
     "react": "^16.0.0",
     "react-dom": "npm:@hot-loader/react-dom",
     "react-hot-loader": "^4.11.0",
