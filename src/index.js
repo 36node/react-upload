@@ -2,7 +2,6 @@ import React from "react";
 import { Upload, message, Modal, Icon } from "antd";
 import isEqual from "lodash/isEqual";
 import PropTypes from "prop-types";
-import moment from "moment";
 import { Upload as s3Upload } from "@aws-sdk/lib-storage";
 import { S3Client } from "@aws-sdk/client-s3";
 
@@ -145,7 +144,7 @@ export default class UploadComponent extends React.Component {
     try {
       const { ossOptions = {} } = this.props;
       let { key, bucket, url } = ossOptions;
-      key = key || `${moment().unix()}-${file.uid}-${file.name}`;
+      key = key || `${new Date().getTime()}-${file.uid}-${file.name}`;
       if (key) {
         key = typeof key === "function" ? key() : key;
 
