@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.1](https://github.com/36node/sketch/compare/v0.4.0...v0.4.1) (2021-11-02)
+
+
+### Bug Fixes
+
+* moment locale error ([b66f52a](https://github.com/36node/sketch/commit/b66f52a))
+
+
+
 ## [0.4.0](https://github.com/36node/sketch/compare/v0.3.6...v0.4.0) (2021-11-02)
 
 
