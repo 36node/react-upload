@@ -1,0 +1,22 @@
+# This workflow will run tests using node and then publish a package to NPM Packages when a release is created
+# For more information see: https://help.github.com/actions/language-and-framework-guides/publishing-nodejs-packages
+
+# 用于验证pr是否包括issue链接
+
+name: Issue link verify
+
+on:
+  pull_request:
+    types: [edited, synchronize, opened, reopened]
+
+jobs:
+  pr-verify:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Verify Linked Issue
+        uses: hattan/verify-linked-issue-action@v1.1.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          message: "请添加issue链接！"
