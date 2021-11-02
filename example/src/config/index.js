@@ -35,10 +35,26 @@ export default function env(name, init) {
 
 export const STORE_BASE = env("STORE_BASE", "");
 export const VERSION = env("VERSION");
-export const ACCESS_KEY_ID = env("ACCESS_KEY_ID", "");
-export const ACCESS_KEY_SECRET = env("ACCESS_KEY_SECRET", "");
-export const BUCKET = env("BUCKET", "");
-export const REGION = env("REGION", "");
+
+/**
+ * oss config
+ */
+export const OSS_REGION = env("OSS_REGION", "");
+export const OSS_ENDPOINT = env("OSS_ENDPOINT", "");
+export const OSS_BUCKET = env("OSS_BUCKET", "");
+export const OSS_ACCESS_KEY_ID = env("OSS_ACCESS_KEY_ID", "");
+export const OSS_ACCESS_KEY_SECRET = env("OSS_ACCESS_KEY_SECRET", "");
+export const OSS_URL = env("OSS_URL", "");
+export const OSS_CONFIG = {
+  endpoint: OSS_ENDPOINT,
+  credentials: {
+    accessKeyId: OSS_ACCESS_KEY_ID,
+    secretAccessKey: OSS_ACCESS_KEY_SECRET,
+  },
+  region: OSS_REGION,
+  bucket: OSS_BUCKET,
+  url: OSS_URL,
+};
 
 /* eslint-disable */
 console.log("STORE_BASE: ", STORE_BASE);

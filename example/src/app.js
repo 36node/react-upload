@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { hot } from "react-hot-loader/root";
 import { Button, Form, Divider, Icon } from "antd";
 
-import { ACCESS_KEY_ID, ACCESS_KEY_SECRET, BUCKET, REGION } from "./config";
+import { OSS_CONFIG } from "./config";
 import BraftExample from "./braft";
 
 import Upload from "@36node/upload";
@@ -11,12 +11,7 @@ import "@36node/upload/dist/index.css";
 @Form.create()
 class App extends Component {
   get ossOptions() {
-    return {
-      bucket: BUCKET,
-      region: REGION,
-      accessKeyId: ACCESS_KEY_ID,
-      accessKeySecret: ACCESS_KEY_SECRET,
-    };
+    return OSS_CONFIG;
   }
 
   get cropOptions() {
