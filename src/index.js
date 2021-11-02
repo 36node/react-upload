@@ -1,6 +1,6 @@
 import React from "react";
 import { Upload, message, Modal, Icon } from "antd";
-import { isEqual } from "lodash";
+import isEqual from "lodash/isEqual";
 import PropTypes from "prop-types";
 import moment from "moment";
 import { Upload as s3Upload } from "@aws-sdk/lib-storage";
