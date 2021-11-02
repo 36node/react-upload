@@ -1,8 +1,10 @@
 import React from "react";
 import { Upload, message, Modal, Icon } from "antd";
 import isEqual from "lodash/isEqual";
-import OSS from "ali-oss";
 import PropTypes from "prop-types";
+import moment from "moment";
+import { Upload as s3Upload } from "@aws-sdk/lib-storage";
+import { S3Client } from "@aws-sdk/client-s3";
 
 import Crop from "./crop";
 
@@ -30,6 +32,7 @@ function getBase64(file) {
     reader.onerror = error => reject(error);
   });
 }
+
 function disableOrHidePropsChildren(children, listType) {
   if (listType === "picture-card") {
     return null;
@@ -64,7 +67,7 @@ export default class UploadComponent extends React.Component {
     });
 
     if (this.props.ossOptions) {
-      this.client = new OSS(this.props.ossOptions);
+      this.client = new S3Client(this.props.ossOptions);
     } else {
       console.error("ali oss options are missing");
     }
@@ -80,15 +83,15 @@ export default class UploadComponent extends React.Component {
   onChange = ({ fileList }) => {
     const { onChange = () => {}, max } = this.props;
     const list = Number.isSafeInteger(max) ? fileList.slice(0 - max) : fileList;
+    const formatList = list.map(file => ({
+      ...file,
+      url: file.status === "done" ? file.url || file.response.url : "",
+    }));
 
-    list
-      .filter(file => file.status === "done")
-      .forEach(file => {
-        file.url = file.url || file.response.res.requestUrls[0].split("?")[0];
-      });
-
-    this.setState({ fileList: list });
-    onChange(list);
+    this.setState({
+      fileList: formatList,
+    });
+    onChange(formatList);
   };
 
   beforeUpload = async file => {
@@ -115,11 +118,11 @@ export default class UploadComponent extends React.Component {
   };
 
   customRequest = async ({ file, onSuccess, onProgress, onError }) => {
-    try {
-      const res = await this.uploadToOSS(file, onProgress);
+    const res = await this.uploadToOSS(file, onProgress);
+    if (!res.errCode) {
       onSuccess(res);
-    } catch (e) {
-      onError(e);
+    } else {
+      onError(res.error);
     }
   };
 
@@ -135,23 +138,47 @@ export default class UploadComponent extends React.Component {
     ) {
       return "image/jpg";
     }
-    return undefined;
+    return "application/octet-stream";
   };
 
   uploadToOSS = async (file, onProgress) => {
-    const { ossOptions = {} } = this.props;
-    let { key } = ossOptions;
-    key =
-      key ||
-      `${file.name.split(".")[0]}-${file.uid}.${file.name.split(".")[1]}`;
-    if (key) {
-      key = typeof key === "function" ? key() : key;
-      return await this.client.multipartUpload(key, file, {
-        mime: this.setContentType(key),
-        progress: p => {
-          onProgress({ percent: p * 100 });
-        },
-      });
+    try {
+      const { ossOptions = {} } = this.props;
+      let { key, bucket, url } = ossOptions;
+      key = key || `${moment().unix()}-${file.uid}-${file.name}`;
+      if (key) {
+        key = typeof key === "function" ? key() : key;
+
+        const parallelUploads3 = new s3Upload({
+          client: this.client,
+          queueSize: 4,
+          partSize: 1024 * 1024 * 100,
+          leavePartsOnError: false,
+          params: {
+            Bucket: bucket,
+            Key: key,
+            Body: file,
+            ContentType: this.setContentType(key),
+          },
+        });
+
+        parallelUploads3.on("httpUploadProgress", progress => {
+          // 统计上传进度
+          onProgress(progress);
+        });
+
+        const res = await parallelUploads3.done();
+        return {
+          ...res,
+          url: `${url}/${key}`,
+          errCode: 0,
+        };
+      }
+    } catch (error) {
+      return {
+        errCode: 1,
+        error,
+      };
     }
   };
 

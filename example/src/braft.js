@@ -4,19 +4,14 @@ import { ContentUtils } from "braft-utils";
 import "braft-editor/dist/index.css";
 import { Form, Icon } from "antd";
 
-import { ACCESS_KEY_ID, ACCESS_KEY_SECRET, BUCKET, REGION } from "./config";
+import { OSS_CONFIG } from "./config";
 
 import Upload from "@36node/upload";
 
 @Form.create()
 export default class BraftExample extends Component {
   get ossOptions() {
-    return {
-      bucket: BUCKET,
-      region: REGION,
-      accessKeyId: ACCESS_KEY_ID,
-      accessKeySecret: ACCESS_KEY_SECRET,
-    };
+    return OSS_CONFIG;
   }
 
   get cropOptions() {

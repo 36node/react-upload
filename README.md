@@ -19,10 +19,14 @@ import Upload from "@36node/upload";
 import "@36node/upload/dist/index.css";
 
 const ossOptions = {
+  endpoint: '<oss endpoint>',
+  credentials: {
+    accessKeyId: '<Your accessKeyId>',
+    secretAccessKey: '<Your secretAccessKey>',
+  }
   region: '<oss region>',
-  accessKeyId: '<Your accessKeyId>',
-  accessKeySecret: '<Your accessKeySecret>',
-  bucket: '<Your bucket name>'
+  bucket: '<Your bucket name>',
+  url: '<oss prefix>'
 }
 
 <Upload ossOptions={ossOptions}>
@@ -68,11 +72,10 @@ const cropOptions = {
 
 <Upload ossOptions={ossOptions} cropOptions={cropOptions}>
   <Button>upload</Button>
-</Upload>
+</Upload>;
 ```
 
 check full examples [here](./example/src/app.js)
-
 
 ## API
 
@@ -80,18 +83,17 @@ check full examples [here](./example/src/app.js)
 
 some extra options are list below
 
-| Property | Description | Type | Default |
-|------------|--------------|-------------|--------------|
-| ossOptions | [ali-oss](https://github.com/ali-sdk/ali-oss) options, required | object | - |
-| cropOptions |	crop option from [react-image-crop](https://github.com/DominicTobias/react-image-crop#readme) | object | - |
-| maxFileSize | the max size of file list. Size unit is kb. | number | - |
-| maxFileNumber | the max number of file list | number | - |
-| value | initial file list | array | - |
-| onChange | A callback function, can be executed when uploading state is changing | Function | - |
-| listType | Built-in stylesheets, support for three types: text, picture or picture-card | String | 'text' |
-| accept | File types that can be accepted. See input accept [Attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#accept) | String | - |
-| preview | Preview the uploaded pictures. If preview is true, the upload component will display preview of picture. | Boolean | true |
-
+| Property      | Description                                                                                                                                | Type     | Default |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | -------- | ------- |
+| ossOptions    | [aws-client-s3](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-s3/interfaces/s3clientconfig.html) options, required | object   | -       |
+| cropOptions   | crop option from [react-image-crop](https://github.com/DominicTobias/react-image-crop#readme)                                              | object   | -       |
+| maxFileSize   | the max size of file list. Size unit is kb.                                                                                                | number   | -       |
+| maxFileNumber | the max number of file list                                                                                                                | number   | -       |
+| value         | initial file list                                                                                                                          | array    | -       |
+| onChange      | A callback function, can be executed when uploading state is changing                                                                      | Function | -       |
+| listType      | Built-in stylesheets, support for three types: text, picture or picture-card                                                               | String   | 'text'  |
+| accept        | File types that can be accepted. See input accept [Attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#accept) | String   | -       |
+| preview       | Preview the uploaded pictures. If preview is true, the upload component will display preview of picture.                                   | Boolean  | true    |
 
 ## Contributing
 
