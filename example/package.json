@@ -34,7 +34,7 @@
     "@types/react-dom": "^16.8.2",
     "lint-staged": "^8.1.5",
     "prettier": "1.17.1",
-    "standard-version": "^6.0.1"
+    "standard-version": "^8.0.1"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.33.0",
