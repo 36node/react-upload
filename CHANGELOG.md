@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.4.0](https://github.com/36node/sketch/compare/v0.3.6...v0.4.0) (2021-11-02)
+
+
+### Features
+
+* change ali-oss to aws-s3 ([#10](https://github.com/36node/sketch/issues/10)) ([e835271](https://github.com/36node/sketch/commit/e835271))
+* update github action ([ee8d90a](https://github.com/36node/sketch/commit/ee8d90a))
+
+
+
 ### [0.3.6](https://github.com/36node/sketch/compare/v0.3.5...v0.3.6) (2020-10-26)
 
 
