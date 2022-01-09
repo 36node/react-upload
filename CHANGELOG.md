@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.5.0](https://github.com/36node/sketch/compare/v0.4.2...v0.5.0) (2022-01-09)
+
+
+### Features
+
+* update oss key ([16198ee](https://github.com/36node/sketch/commit/16198ee))
+
+
+
 ### [0.4.2](https://github.com/36node/sketch/compare/v0.4.1...v0.4.2) (2021-11-02)
 
 
