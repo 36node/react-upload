@@ -146,7 +146,7 @@ export default class UploadComponent extends React.Component {
       let { key, bucket, url } = ossOptions;
       key = key || `${new Date().getTime()}-${file.uid}-${file.name}`;
       if (key) {
-        key = typeof key === "function" ? key() : key;
+        key = typeof key === "function" ? key(file) : key;
 
         const parallelUploads3 = new s3Upload({
           client: this.client,
